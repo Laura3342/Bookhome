@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BookHome - Recomendaciones</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+
+    <header>
+        <h1>BookHome</h1>
+        <p>Listas recomendadas</p>
+    </header>
+
+    <nav>
+        <a th:href="@{/}">Index</a>
+        <a th:href="@{/home}">Home</a>
+        <a th:href="@{/mis-libros}">Mis libros</a>
+        <a th:href="@{/recomendaciones}">Recomendaciones</a>
+    </nav>
+
+    <main>
+        <h2>Recomendaciones</h2>
+        <p>Aquí aparecerán las listas de libros recomendados.</p>
+
+        <div class="card">
+            <h3>Clásicos imprescindibles</h3>
+            <p>Una selección de títulos clásicos recomendados.</p>
+        </div>
+
+        <div class="card">
+            <h3>Libros de fantasía</h3>
+            <p>Una lista con novelas y sagas de fantasía recomendadas.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>BookHome - Proyecto de gestión de lecturas</p>
+    </footer>
+
+</body>
+</html>

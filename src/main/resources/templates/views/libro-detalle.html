@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BookHome - Detalle del libro</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+
+    <header>
+        <h1>BookHome</h1>
+        <p>Detalle del libro</p>
+    </header>
+
+    <nav>
+        <a th:href="@{/}">Index</a>
+        <a th:href="@{/home}">Home</a>
+        <a th:href="@{/mis-libros}">Mis libros</a>
+        <a th:href="@{/recomendaciones}">Recomendaciones</a>
+    </nav>
+
+    <main>
+        <h2>Detalle del libro</h2>
+
+        <div class="card">
+            <p><strong>Título:</strong> Libro de ejemplo</p>
+            <p><strong>Autor:</strong> Autor de ejemplo</p>
+            <p><strong>Estado:</strong> Pendiente</p>
+            <p><strong>Puntuación:</strong> Sin valorar</p>
+            <p><strong>Comentario:</strong> Sin comentario</p>
+        </div>
+
+        <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
+    </main>
+
+    <footer>
+        <p>BookHome - Proyecto de gestión de lecturas</p>
+    </footer>
+
+</body>
+</html>
