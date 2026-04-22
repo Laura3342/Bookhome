@@ -7,35 +7,41 @@
 </head>
 <body>
 
-    <header>
-        <h1>BookHome</h1>
-        <p>Detalle del libro</p>
-    </header>
+<header>
+    <h1>BookHome</h1>
+    <p>Detalle del libro</p>
+</header>
 
-    <nav>
-        <a th:href="@{/}">Index</a>
-        <a th:href="@{/home}">Home</a>
-        <a th:href="@{/mis-libros}">Mis libros</a>
-        <a th:href="@{/recomendaciones}">Recomendaciones</a>
-    </nav>
+<nav>
+    <a th:href="@{/}">Index</a>
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/mis-libros}">Mis libros</a>
+    <a th:href="@{/recomendaciones}">Recomendaciones</a>
+</nav>
 
-    <main>
-        <h2>Detalle del libro</h2>
+<main>
+    <h2>Detalle del libro</h2>
 
-        <div class="card">
-            <p><strong>Título:</strong> Libro de ejemplo</p>
-            <p><strong>Autor:</strong> Autor de ejemplo</p>
-            <p><strong>Estado:</strong> Pendiente</p>
-            <p><strong>Puntuación:</strong> Sin valorar</p>
-            <p><strong>Comentario:</strong> Sin comentario</p>
-        </div>
+    <div class="card" th:if="${libro != null}">
+        <p><strong>Título:</strong> <span th:text="${libro.titulo}"></span></p>
+        <p><strong>Autor:</strong> <span th:text="${libro.autor}"></span></p>
+        <p><strong>Género:</strong> <span th:text="${libro.genero}"></span></p>
+        <p><strong>Estado:</strong> <span th:text="${libro.estadoLectura}"></span></p>
+        <p><strong>Puntuación:</strong> <span th:text="${libro.puntuacion}"></span></p>
+        <p><strong>Favorito:</strong> <span th:text="${libro.favorito} ? 'Sí' : 'No'"></span></p>
+        <p><strong>Comentario:</strong> <span th:text="${libro.comentario}"></span></p>
+    </div>
 
-        <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
-    </main>
+    <div class="card" th:if="${libro == null}">
+        <p>El libro no existe.</p>
+    </div>
 
-    <footer>
-        <p>BookHome - Proyecto de gestión de lecturas</p>
-    </footer>
+    <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
+</main>
+
+<footer>
+    <p>BookHome - Proyecto de gestión de lecturas</p>
+</footer>
 
 </body>
 </html>
