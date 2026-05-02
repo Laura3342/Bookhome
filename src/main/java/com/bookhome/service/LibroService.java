@@ -60,6 +60,10 @@ public class LibroService {
         return null;
     }
 
+    public void agregarLibro(Libro libro) {
+        libros.add(libro);
+    }
+
 
 
 }

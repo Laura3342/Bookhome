@@ -7,36 +7,47 @@
 </head>
 <body>
 
-    <header>
-        <h1>BookHome</h1>
-        <p>Listas recomendadas</p>
-    </header>
+<header class="main-header">
+    <h1>BookHome</h1>
+    <p>Listas recomendadas</p>
+</header>
 
-    <nav>
-        <a th:href="@{/}">Index</a>
-        <a th:href="@{/home}">Home</a>
-        <a th:href="@{/mis-libros}">Mis libros</a>
-        <a th:href="@{/recomendaciones}">Recomendaciones</a>
-    </nav>
+<nav class="navbar">
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/mis-libros}">Mis libros</a>
+    <a th:href="@{/recomendaciones}">Recomendaciones</a>
+    <a th:href="@{/}">Volver al inicio</a>
+</nav>
 
-    <main>
-        <h2>Recomendaciones</h2>
-        <p>Aquí aparecerán las listas de libros recomendados.</p>
+<main class="container">
 
-        <div class="card">
-            <h3>Clásicos imprescindibles</h3>
-            <p>Una selección de títulos clásicos recomendados.</p>
+    <section class="cards-section">
+        <h2>Explora nuestras recomendaciones</h2>
+        <p>Consulta listas de libros recomendados y descubre nuevas lecturas para añadir a tu biblioteca.</p>
+
+        <div class="cards-grid">
+            <article class="card" th:each="lista : ${listas}">
+                <h3 th:text="${lista.nombre}">Nombre de la lista</h3>
+                <p th:text="${lista.descripcion}">Descripción de la lista</p>
+
+                <p>
+                    <strong>Número de libros:</strong>
+                    <span th:text="${lista.libros.size()}">0</span>
+                </p>
+
+                <a class="button-link"
+                   th:href="@{/recomendaciones/{id}(id=${lista.id})}">
+                    Ver lista
+                </a>
+            </article>
         </div>
+    </section>
 
-        <div class="card">
-            <h3>Libros de fantasía</h3>
-            <p>Una lista con novelas y sagas de fantasía recomendadas.</p>
-        </div>
-    </main>
+</main>
 
-    <footer>
-        <p>BookHome - Proyecto de gestión de lecturas</p>
-    </footer>
+<footer>
+    <p>BookHome - Sistema de gestión de lecturas</p>
+</footer>
 
 </body>
 </html>

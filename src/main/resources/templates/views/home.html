@@ -7,38 +7,95 @@
 </head>
 <body>
 
-    <header>
-        <h1>BookHome</h1>
-        <p>Panel principal del usuario</p>
-    </header>
+<header class="main-header">
+    <h1>BookHome</h1>
+    <p>Organiza tus lecturas, descubre libros y gestiona tu biblioteca personal.</p>
+</header>
 
-    <nav>
-        <a th:href="@{/}">Index</a>
-        <a th:href="@{/home}">Home</a>
-        <a th:href="@{/mis-libros}">Mis libros</a>
-        <a th:href="@{/recomendaciones}">Recomendaciones</a>
-    </nav>
+<nav class="navbar">
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/mis-libros}">Mis libros</a>
+    <a th:href="@{/recomendaciones}">Recomendaciones</a>
+    <a th:href="@{/}">Cerrar sesión</a>
+</nav>
 
-    <main>
-        <h2>Home</h2>
-        <p>Desde esta pantalla podrás acceder a tu biblioteca personal, consultar recomendaciones y buscar libros.</p>
+<main class="container">
 
-        <div class="card">
-            <h3>Biblioteca personal</h3>
-            <p>Consulta los libros que has guardado en tu colección.</p>
-            <a class="button-link" th:href="@{/mis-libros}">Ir a mis libros</a>
+    <section class="hero-section">
+        <div>
+            <h2>Bienvenida a tu espacio de lectura</h2>
+            <p>
+                Desde aquí puedes consultar tu biblioteca personal, explorar listas recomendadas
+                y buscar nuevos libros para añadirlos a tus lecturas.
+            </p>
         </div>
+        <a class="button-link" th:href="@{/mis-libros}">Ver mi biblioteca</a>
+    </section>
 
-        <div class="card">
-            <h3>Recomendaciones</h3>
-            <p>Descubre listas de libros recomendados.</p>
-            <a class="button-link" th:href="@{/recomendaciones}">Ver recomendaciones</a>
+    <section class="search-section">
+        <h2>Buscar libros</h2>
+        <p>Busca libros por título, autor o género. Más adelante esta búsqueda se conectará con una API externa.</p>
+
+        <form class="search-form" action="#" method="get">
+            <input type="text" name="busqueda" placeholder="Ejemplo: fantasía, Orwell, romance...">
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <section class="cards-section">
+        <h2>Accesos principales</h2>
+
+        <div class="cards-grid">
+
+            <article class="card">
+                <h3>Mis libros</h3>
+                <p>Consulta los libros que tienes guardados en tu biblioteca personal.</p>
+                <a class="button-link" th:href="@{/mis-libros}">Entrar</a>
+            </article>
+
+            <article class="card">
+                <h3>Recomendaciones</h3>
+                <p>Explora listas recomendadas y descubre nuevas lecturas.</p>
+                <a class="button-link" th:href="@{/recomendaciones}">Ver listas</a>
+            </article>
+
+            <article class="card">
+                <h3>Favoritos</h3>
+                <p>Accede rápidamente a tus libros favoritos.</p>
+                <a class="button-link" th:href="@{/mis-libros}">Ver favoritos</a>
+            </article>
+
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>BookHome - Proyecto de gestión de lecturas</p>
-    </footer>
+    <section class="recommended-preview">
+        <h2>Listas recomendadas destacadas</h2>
+
+        <div class="cards-grid">
+
+            <article class="card">
+                <h3>Clásicos imprescindibles</h3>
+                <p>Una selección de libros clásicos para cualquier lector.</p>
+            </article>
+
+            <article class="card">
+                <h3>Fantasía y aventura</h3>
+                <p>Historias llenas de mundos imaginarios, magia y viajes.</p>
+            </article>
+
+            <article class="card">
+                <h3>Ciencia ficción</h3>
+                <p>Libros sobre futuros posibles, tecnología y sociedad.</p>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>BookHome - Sistema de gestión de lecturas</p>
+</footer>
 
 </body>
 </html>

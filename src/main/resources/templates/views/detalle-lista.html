@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle lista</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+
+<header class="main-header">
+    <h1 th:text="${lista.nombre}">Nombre lista</h1>
+    <p th:text="${lista.descripcion}">Descripción</p>
+</header>
+
+<nav class="navbar">
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/mis-libros}">Mis libros</a>
+    <a th:href="@{/recomendaciones}">Recomendaciones</a>
+</nav>
+
+<main class="container">
+
+    <section class="cards-section">
+        <h2>Libros de esta lista</h2>
+
+        <div class="cards-grid">
+
+            <article class="card" th:each="libro : ${lista.libros}">
+                <h3 th:text="${libro.titulo}">Título</h3>
+                <p th:text="${libro.autor}">Autor</p>
+                <p th:text="${libro.genero}">Género</p>
+
+                <a class="button-link"
+                   th:href="@{/libros/{id}(id=${libro.id})}">
+                    Ver detalle
+                </a>
+                <a class="button-link"
+                   th:href="@{/recomendaciones/libro/{id}/agregar(id=${libro.id})}">
+                    Añadir a mi biblioteca
+                </a>
+
+            </article>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>BookHome</p>
+</footer>
+
+</body>
+</html>
