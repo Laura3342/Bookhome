@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bookhome.models.EstadoLectura.PENDIENTE;
+
 @Service
 public class RecomendacionService {
 
@@ -16,19 +18,19 @@ public class RecomendacionService {
     public RecomendacionService() {
 
         List<Libro> clasicos = new ArrayList<>();
-        clasicos.add(new Libro(101L, "Orgullo y prejuicio", "Jane Austen", "Clásico", "Pendiente", null, false, ""));
-        clasicos.add(new Libro(102L, "Don Quijote de la Mancha", "Miguel de Cervantes", "Clásico", "Pendiente", null, false, ""));
-        clasicos.add(new Libro(103L, "Crimen y castigo", "Fiódor Dostoyevski", "Clásico", "Pendiente", null, false, ""));
+        clasicos.add(new Libro(101L, 24L,"Orgullo y prejuicio", "Jane Austen", "Clásico", PENDIENTE, null, false, ""));
+        clasicos.add(new Libro(102L, 25L,"Don Quijote de la Mancha", "Miguel de Cervantes", "Clásico", PENDIENTE, null, false, ""));
+        clasicos.add(new Libro(103L,26L, "Crimen y castigo", "Fiódor Dostoyevski", "Clásico", PENDIENTE, null, false, ""));
 
         List<Libro> fantasia = new ArrayList<>();
-        fantasia.add(new Libro(201L, "El hobbit", "J. R. R. Tolkien", "Fantasía", "Pendiente", null, false, ""));
-        fantasia.add(new Libro(202L, "Harry Potter y la piedra filosofal", "J. K. Rowling", "Fantasía", "Pendiente", null, false, ""));
-        fantasia.add(new Libro(203L, "El nombre del viento", "Patrick Rothfuss", "Fantasía", "Pendiente", null, false, ""));
+        fantasia.add(new Libro(201L,27L, "El hobbit", "J. R. R. Tolkien", "Fantasía", PENDIENTE, null, false, ""));
+        fantasia.add(new Libro(202L,29L, "Harry Potter y la piedra filosofal", "J. K. Rowling", "Fantasía", PENDIENTE, null, false, ""));
+        fantasia.add(new Libro(203L, 28L,"El nombre del viento", "Patrick Rothfuss", "Fantasía", PENDIENTE, null, false, ""));
 
         List<Libro> cienciaFiccion = new ArrayList<>();
-        cienciaFiccion.add(new Libro(301L, "Dune", "Frank Herbert", "Ciencia ficción", "Pendiente", null, false, ""));
-        cienciaFiccion.add(new Libro(302L, "Fahrenheit 451", "Ray Bradbury", "Ciencia ficción", "Pendiente", null, false, ""));
-        cienciaFiccion.add(new Libro(303L, "Neuromante", "William Gibson", "Ciencia ficción", "Pendiente", null, false, ""));
+        cienciaFiccion.add(new Libro(301L, 31L,"Dune", "Frank Herbert", "Ciencia ficción", PENDIENTE, null, false, ""));
+        cienciaFiccion.add(new Libro(302L, 32L,"Fahrenheit 451", "Ray Bradbury", "Ciencia ficción", PENDIENTE, null, false, ""));
+        cienciaFiccion.add(new Libro(303L, 41L,"Neuromante", "William Gibson", "Ciencia ficción", PENDIENTE, null, false, ""));
 
         listasRecomendadas.add(new ListaRecomendada(
                 1L,

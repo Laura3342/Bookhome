@@ -133,3 +133,54 @@ footer {
         flex-direction: column;
     }
 }
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-card p {
+    margin-bottom: 8px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.button-link.danger {
+    background-color: #9d3b3b;
+}
+
+.button-link.danger:hover {
+    background-color: #7c2f2f;
+}
+
+.empty-state {
+    background-color: #f7f9fb;
+    border: 1px dashed #bbb;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.alert.success {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+}
+
+.alert.error {
+    background-color: #fdecea;
+    color: #b02a37;
+}

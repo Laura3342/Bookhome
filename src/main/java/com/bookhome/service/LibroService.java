@@ -1,10 +1,13 @@
 package com.bookhome.service;
 
+import com.bookhome.models.EstadoLectura;
 import com.bookhome.models.Libro;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bookhome.models.EstadoLectura.*;
 
 
 @Service
@@ -14,10 +17,11 @@ public class LibroService {
     public LibroService(){
         libros.add(new Libro(
                 1L,
+                22L,
                 "Cien años de soledad",
                 "Gabriel Garcia Márquez",
                 "Realismo mágico",
-                "Leído",
+                LEIDO,
                 5,
                 true,
                 "Una obra impresionante."
@@ -25,10 +29,11 @@ public class LibroService {
 
         libros.add(new Libro(
                 2L,
+                21L,
                 "1984",
                 "George Orwell",
                 "Distopía",
-                "Leyendo",
+                LEYENDO,
                 4,
                 false,
                 "Muy interesante y actual."
@@ -36,10 +41,11 @@ public class LibroService {
 
         libros.add(new Libro(
                 3L,
+                23L,
                 "El principito",
                 "Antoine de Saint-Exupéry",
                 "Fábula",
-                "Pendiente",
+                PENDIENTE,
                 null,
                 false,
                 "Todavía no lo he empezado."
@@ -60,10 +66,66 @@ public class LibroService {
         return null;
     }
 
-    public void agregarLibro(Libro libro) {
-        libros.add(libro);
+    public boolean existeLibroPorTituloYAutor(String titulo, String autor) {
+        return libros.stream()
+                .anyMatch(libro ->
+                        libro.getTitulo().equalsIgnoreCase(titulo)
+                                && libro.getAutor().equalsIgnoreCase(autor)
+                );
     }
 
+    public boolean existeLibroPorIdExterno(String idExterno) {
+        return libros.stream()
+                .anyMatch(libro -> idExterno != null &&
+                        idExterno.equals(libro.getIdExterno()));
+    }
 
+    public boolean agregarLibro(Libro libro) {
+        if (existeLibroPorTituloYAutor(libro.getTitulo(), libro.getAutor())) {
+            return false;
+        }
+
+        libros.add(libro);
+        return true;
+    }
+
+    public void eliminarLibroPorId(Long id) {
+        libros.removeIf(libro -> libro.getId().equals(id));
+    }
+    public void cambiarEstadoLectura(Long id, EstadoLectura estadoLectura) {
+        Libro libro = obtenerLibroPorId(id);
+
+        if (libro != null) {
+            libro.setEstadoLectura(estadoLectura);
+        }
+    }
+
+    public void cambiarFavorito(Long id) {
+        Libro libro = obtenerLibroPorId(id);
+
+        if (libro != null) {
+            libro.setFavorito(!libro.isFavorito());
+        }
+    }
+
+    public void cambiarPuntuacion(Long id, Integer puntuacion) {
+        Libro libro = obtenerLibroPorId(id);
+
+        if (libro != null) {
+            libro.setPuntuacion(puntuacion);
+        }
+    }
+
+    public void cambiarComentario(Long id, String comentario) {
+        Libro libro = obtenerLibroPorId(id);
+
+        if (libro != null) {
+            if (comentario == null || comentario.trim().isEmpty()) {
+                libro.setComentario(null);
+            } else {
+                libro.setComentario(comentario);
+            }
+        }
+    }
 
 }
