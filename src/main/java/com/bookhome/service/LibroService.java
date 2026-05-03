@@ -17,15 +17,15 @@ public class LibroService {
     public LibroService(){
         libros.add(new Libro(
                 1L,
-                "1",
-                "Cien años de soledad",
-                "Gabriel Garcia Márquez",
-                "Realismo mágico",
-                "",
+                null,
+                "El camino de los reyes",
+                "Brandon Sanderson",
+                "Fantasía",
+                "/images/El-Camino-de-los-Reyes.jpg",
                 LEIDO,
                 5,
                 true,
-                "Una obra impresionante."
+                "Inicio épico de El Archivo de las Tormentas."
         ));
 
         libros.add(new Libro(
@@ -34,7 +34,7 @@ public class LibroService {
                 "1984",
                 "George Orwell",
                 "Distopía",
-                "",
+                "/images/1984.jpg",
                 LEYENDO,
                 4,
                 false,
@@ -43,15 +43,15 @@ public class LibroService {
 
         libros.add(new Libro(
                 3L,
-                "3",
-                "El principito",
-                "Antoine de Saint-Exupéry",
-                "Fábula",
-                "",
+                null,
+                "It",
+                "Stephen King",
+                "Terror",
+                "/images/it.jpg",
                 PENDIENTE,
                 null,
                 false,
-                "Todavía no lo he empezado."
+                "Clásico del terror psicológico."
         ));
 
         }

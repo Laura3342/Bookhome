@@ -7,17 +7,21 @@
 </head>
 <body>
 
-<header class="main-header">
-    <h1>BookHome</h1>
-    <p>Organiza tus lecturas, descubre libros y gestiona tu biblioteca personal.</p>
-</header>
+<header class="site-header">
+    <div class="header-banner"></div>
 
-<nav class="navbar">
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-    <a th:href="@{/}">Cerrar sesión</a>
-</nav>
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
+</header>
 
 <main class="container">
 

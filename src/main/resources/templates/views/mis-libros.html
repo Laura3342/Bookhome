@@ -36,6 +36,12 @@
         <div class="cards-grid" th:if="${libros != null and !libros.isEmpty()}">
 
             <article class="card book-card" th:each="libro : ${libros}">
+
+                <img th:if="${libro.imagenUrl != null and !libro.imagenUrl.isEmpty()}"
+                     th:src="@{${libro.imagenUrl}}"
+                     th:alt="${libro.titulo}"
+                     class="book-cover">
+
                 <h3 th:text="${libro.titulo}">Título del libro</h3>
 
                 <p>
@@ -132,6 +138,7 @@
                         </button>
                     </form>
                 </div>
+
             </article>
 
         </div>
