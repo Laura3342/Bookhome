@@ -36,9 +36,19 @@
         <h2>Buscar libros</h2>
         <p>Busca libros por título, autor o género. Más adelante esta búsqueda se conectará con una API externa.</p>
 
-        <form class="search-form" action="#" method="get">
-            <input type="text" name="busqueda" placeholder="Ejemplo: fantasía, Orwell, romance...">
-            <button type="submit">Buscar</button>
+        <form th:action="@{/buscar-libros}" method="get">
+            <input type="text"
+                   name="titulo"
+                   placeholder="Título del libro"
+                   >
+
+            <input type="text"
+                   name="autor"
+                   placeholder="Autor opcional">
+
+            <button type="submit" class="button-link">
+                Buscar
+            </button>
         </form>
     </section>
 

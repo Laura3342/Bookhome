@@ -13,10 +13,11 @@ import lombok.Value;
 public class Libro {
 
     private Long id;
-    private Long idExterno;
+    private String idExterno;
     private String titulo;
     private String autor;
     private String genero;
+    private String imagenUrl;
     private EstadoLectura estadoLectura;
     private Integer puntuacion;
     private boolean favorito;

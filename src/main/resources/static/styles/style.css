@@ -184,3 +184,12 @@ footer {
     background-color: #fdecea;
     color: #b02a37;
 }
+
+.book-cover {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 16px auto;
+    border-radius: 6px;
+}

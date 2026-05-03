@@ -17,10 +17,11 @@ public class LibroService {
     public LibroService(){
         libros.add(new Libro(
                 1L,
-                22L,
+                "1",
                 "Cien años de soledad",
                 "Gabriel Garcia Márquez",
                 "Realismo mágico",
+                "",
                 LEIDO,
                 5,
                 true,
@@ -29,10 +30,11 @@ public class LibroService {
 
         libros.add(new Libro(
                 2L,
-                21L,
+                "2",
                 "1984",
                 "George Orwell",
                 "Distopía",
+                "",
                 LEYENDO,
                 4,
                 false,
@@ -41,10 +43,11 @@ public class LibroService {
 
         libros.add(new Libro(
                 3L,
-                23L,
+                "3",
                 "El principito",
                 "Antoine de Saint-Exupéry",
                 "Fábula",
+                "",
                 PENDIENTE,
                 null,
                 false,
@@ -81,6 +84,14 @@ public class LibroService {
     }
 
     public boolean agregarLibro(Libro libro) {
+        if (libro == null) {
+            return false;
+        }
+
+        if (existeLibroPorIdExterno(libro.getIdExterno())) {
+            return false;
+        }
+
         if (existeLibroPorTituloYAutor(libro.getTitulo(), libro.getAutor())) {
             return false;
         }

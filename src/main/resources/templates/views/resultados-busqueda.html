@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de búsqueda - BookHome</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>BookHome</h1>
+    <p>Resultados de búsqueda</p>
+</header>
+
+<nav>
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/mis-libros}">Mis libros</a>
+    <a th:href="@{/recomendaciones}">Recomendaciones</a>
+</nav>
+
+<main class="container">
+
+    <section class="cards-section">
+        <h2>Resultados para: <span th:text="${titulo}"></span></h2>
+
+        <div class="cards-grid" th:if="${libros != null and !libros.isEmpty()}">
+
+            <article class="card" th:each="item : ${libros}">
+
+                <div th:if="${item.volumeInfo.imageLinks != null}">
+                    <img th:src="${item.volumeInfo.imageLinks.thumbnail}"
+                         th:alt="${item.volumeInfo.title}"
+                         class="book-cover">
+                </div>
+
+                <h3 th:text="${item.volumeInfo.title}">Título</h3>
+
+                <p>
+                    <strong>Autor:</strong>
+                    <span th:text="${item.volumeInfo.authors != null ? item.volumeInfo.authors[0] : 'Desconocido'}"></span>
+                </p>
+
+                <p>
+                    <strong>Categoría:</strong>
+                    <span th:text="${item.volumeInfo.categories != null ? item.volumeInfo.categories[0] : 'N/A'}"></span>
+                </p>
+
+                <form th:action="@{/buscar-libros/{idExterno}/agregar(idExterno=${item.id})}" method="post">
+                    <button type="submit" class="button-link">
+                        Añadir a mi biblioteca
+                    </button>
+                </form>
+
+
+
+            </article>
+
+        </div>
+
+        <div th:if="${libros == null or libros.isEmpty()}">
+            <p>No se encontraron resultados.</p>
+        </div>
+
+        <div class="pagination">
+
+            <a th:if="${startIndex > 0}"
+               th:href="@{/buscar-libros(
+           titulo=${titulo},
+           autor=${autor},
+           startIndex=${startIndex - 12}
+       )}">
+                ← Anterior
+            </a>
+
+            <a th:if="${libros != null and !libros.isEmpty()}"
+               th:href="@{/buscar-libros(
+           titulo=${titulo},
+           autor=${autor},
+           startIndex=${startIndex + 12}
+       )}">
+                Siguiente →
+            </a>
+
+        </div>
+    </section>
+
+
+
+</main>
+
+<footer>
+    <p>BookHome</p>
+</footer>
+
+</body>
+</html>>
