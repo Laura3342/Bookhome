@@ -139,4 +139,12 @@ public class LibroService {
         }
     }
 
+    public List<Libro> obtenerLibrosFavoritos() {
+        return libros.stream()
+                .filter(Libro::isFavorito)
+                .toList();
+    }
+
+
+
 }

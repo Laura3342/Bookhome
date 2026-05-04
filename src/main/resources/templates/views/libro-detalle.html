@@ -2,41 +2,84 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>BookHome - Detalle del libro</title>
+    <title th:text="${libro != null ? libro.titulo + ' - BookHome' : 'Libro no encontrado - BookHome'}">
+        BookHome - Detalle del libro
+    </title>
     <link rel="stylesheet" th:href="@{/styles/style.css}">
 </head>
 <body>
 
-<header>
-    <h1>BookHome</h1>
-    <p>Detalle del libro</p>
+<header class="site-header">
+    <div class="header-banner"></div>
+
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
 </header>
 
-<nav>
-    <a th:href="@{/}">Index</a>
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-</nav>
+<main class="container">
 
-<main>
-    <h2>Detalle del libro</h2>
+    <section class="book-detail-section" th:if="${libro != null}">
 
-    <div class="card" th:if="${libro != null}">
-        <p><strong>Título:</strong> <span th:text="${libro.titulo}"></span></p>
-        <p><strong>Autor:</strong> <span th:text="${libro.autor}"></span></p>
-        <p><strong>Género:</strong> <span th:text="${libro.genero}"></span></p>
-        <p><strong>Estado:</strong> <span th:text="${libro.estadoLectura}"></span></p>
-        <p><strong>Puntuación:</strong> <span th:text="${libro.puntuacion}"></span></p>
-        <p><strong>Favorito:</strong> <span th:text="${libro.favorito} ? 'Sí' : 'No'"></span></p>
-        <p><strong>Comentario:</strong> <span th:text="${libro.comentario}"></span></p>
-    </div>
+        <div class="book-detail-cover">
+            <img th:if="${libro.imagenUrl != null and !libro.imagenUrl.isEmpty()}"
+                 th:src="@{${libro.imagenUrl}}"
+                 th:alt="${libro.titulo}">
 
-    <div class="card" th:if="${libro == null}">
+            <div th:if="${libro.imagenUrl == null or libro.imagenUrl.isEmpty()}"
+                 class="cover-placeholder">
+                Sin portada
+            </div>
+        </div>
+
+        <div class="book-detail-info">
+            <p class="detail-label">Detalle del libro</p>
+
+            <h2 th:text="${libro.titulo}">Título del libro</h2>
+
+            <p class="book-author">
+                <span th:text="${libro.autor}">Autor</span>
+            </p>
+
+            <div class="detail-tags">
+                <span th:text="${libro.genero}">Género</span>
+                <span th:text="${libro.estadoLectura}">Estado</span>
+                <span th:text="${libro.favorito ? 'Favorito' : 'No favorito'}">Favorito</span>
+            </div>
+
+            <div class="detail-data">
+                <p>
+                    <strong>Puntuación:</strong>
+                    <span th:text="${libro.puntuacion != null ? libro.puntuacion : 'Sin valorar'}"></span>
+                </p>
+
+                <p>
+                    <strong>Comentario:</strong>
+                    <span th:text="${libro.comentario != null and !libro.comentario.isEmpty() ? libro.comentario : 'Sin comentario'}"></span>
+                </p>
+            </div>
+
+            <div class="card-actions">
+                <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
+                <a class="button-link" th:href="@{/home}">Ir al inicio</a>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="empty-state" th:if="${libro == null}">
         <p>El libro no existe.</p>
-    </div>
+        <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
+    </section>
 
-    <a class="button-link" th:href="@{/mis-libros}">Volver a mis libros</a>
 </main>
 
 <footer>

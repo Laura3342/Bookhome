@@ -7,40 +7,87 @@
 </head>
 <body>
 
-<header class="main-header">
-    <h1>BookHome</h1>
-    <p>Listas recomendadas</p>
-</header>
+<header class="site-header">
+    <div class="header-banner"></div>
 
-<nav class="navbar">
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-    <a th:href="@{/}">Volver al inicio</a>
-</nav>
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
+</header>
 
 <main class="container">
 
-    <section class="cards-section">
-        <h2>Explora nuestras recomendaciones</h2>
-        <p>Consulta listas de libros recomendados y descubre nuevas lecturas para añadir a tu biblioteca.</p>
+    <section class="page-intro">
+        <h2>Listas recomendadas</h2>
+        <p>Explora selecciones pensadas para descubrir nuevas lecturas según tus intereses.</p>
+    </section>
 
-        <div class="cards-grid">
-            <article class="card" th:each="lista : ${listas}">
-                <h3 th:text="${lista.nombre}">Nombre de la lista</h3>
-                <p th:text="${lista.descripcion}">Descripción de la lista</p>
+    <section class="recommendations-page-grid">
 
-                <p>
-                    <strong>Número de libros:</strong>
-                    <span th:text="${lista.libros.size()}">0</span>
-                </p>
+        <article class="recommendation-feature-card">
+            <div>
+                <h3>Clásicos imprescindibles</h3>
+                <p>Obras esenciales que siguen marcando generaciones.</p>
+                <a class="button-link" th:href="@{/recomendaciones/1}">Ver lista</a>
+            </div>
 
-                <a class="button-link"
-                   th:href="@{/recomendaciones/{id}(id=${lista.id})}">
-                    Ver lista
-                </a>
-            </article>
-        </div>
+            <div class="mini-cover-stack">
+                <img th:src="@{/images/cien-años.jpg}" alt="Cien años de soledad">
+                <img th:src="@{/images/rebelion-granja.jpg}" alt="Rebelión en la granja">
+                <img th:src="@{/images/frankenstein.jpg}" alt="Frankenstein">
+            </div>
+        </article>
+
+        <article class="recommendation-feature-card">
+            <div>
+                <h3>Fantasía y aventura</h3>
+                <p>Mundos imaginarios, magia, poder y viajes épicos.</p>
+                <a class="button-link" th:href="@{/recomendaciones/2}">Ver lista</a>
+            </div>
+
+            <div class="mini-cover-stack">
+                <img th:src="@{/images/El-Camino-de-los-Reyes.jpg}" alt="El camino de los reyes">
+                <img th:src="@{/images/trono-cristal.jpg}" alt="Trono de cristal">
+                <img th:src="@{/images/Babel.jpg}" alt="Babel">
+            </div>
+        </article>
+
+        <article class="recommendation-feature-card">
+            <div>
+                <h3>Terror</h3>
+                <p>Historias oscuras, inquietantes y llenas de tensión.</p>
+                <a class="button-link" th:href="@{/recomendaciones/3}">Ver lista</a>
+            </div>
+
+            <div class="mini-cover-stack">
+                <img th:src="@{/images/it.jpg}" alt="It">
+                <img th:src="@{/images/dracula.jpg}" alt="Drácula">
+                <img th:src="@{/images/resplandor.jpg}" alt="El resplandor">
+            </div>
+        </article>
+
+        <article class="recommendation-feature-card">
+            <div>
+                <h3>Romance y drama</h3>
+                <p>Historias emocionales centradas en relaciones y sentimientos.</p>
+                <a class="button-link" th:href="@{/recomendaciones/4}">Ver lista</a>
+            </div>
+
+            <div class="mini-cover-stack">
+                <img th:src="@{/images/antes-diciembre.jpg}" alt="Antes de diciembre">
+                <img th:src="@{/images/bajo-misma-estrella.jpg}" alt="Bajo la misma estrella">
+                <img th:src="@{/images/orgullo-prejuicio.jpg}" alt="Orgullo y prejuicio">
+            </div>
+        </article>
+
     </section>
 
 </main>

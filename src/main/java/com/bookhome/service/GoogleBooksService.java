@@ -2,8 +2,11 @@ package com.bookhome.service;
 
 import com.bookhome.dto.GoogleBookItem;
 import com.bookhome.dto.GoogleBooksResponse;
+import com.bookhome.dto.ImageLinks;
+import com.bookhome.dto.VolumeInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +17,10 @@ import java.util.Map;
 
 @Service
 public class GoogleBooksService {
+    private static final boolean USAR_DEMO = false;
+
     private final RestTemplate restTemplate = new RestTemplate();
+
     @Value("${google.books.api.key}")
     private String apiKey;
 
@@ -67,6 +73,10 @@ public class GoogleBooksService {
                                             String autor,
                                             int startIndex) {
 
+        if (USAR_DEMO) {
+            return generarResultadosDemo();
+        }
+
         StringBuilder consulta = new StringBuilder();
 
         if (titulo != null && !titulo.isBlank()) {
@@ -90,8 +100,17 @@ public class GoogleBooksService {
 
         System.out.println("URL GOOGLE BOOKS: " + url);
 
-        GoogleBooksResponse respuesta =
-                restTemplate.getForObject(url, GoogleBooksResponse.class);
+        GoogleBooksResponse respuesta;
+
+        try {
+            respuesta = restTemplate.getForObject(url, GoogleBooksResponse.class);
+        } catch (RestClientException e) {
+            System.out.println("Google Books API no disponible: " + e.getMessage());
+
+            GoogleBooksResponse respuestaVacia = new GoogleBooksResponse();
+            respuestaVacia.setItems(List.of());
+            return respuestaVacia;
+        }
 
         if (respuesta == null || respuesta.getItems() == null) {
             return respuesta;
@@ -116,11 +135,88 @@ public class GoogleBooksService {
     }
 
     public GoogleBookItem buscarLibroPorId(String idExterno) {
+
+        if (USAR_DEMO) {
+            return buscarLibroDemoPorId(idExterno);
+        }
+
+
         String url = UriComponentsBuilder
                 .fromUriString("https://www.googleapis.com/books/v1/volumes/" + idExterno)
                 .queryParam("key", apiKey)
                 .toUriString();
 
-        return restTemplate.getForObject(url, GoogleBookItem.class);
+        try {
+            return restTemplate.getForObject(url, GoogleBookItem.class);
+        } catch (RestClientException e) {
+            System.out.println("Error buscando libro por ID en Google Books: " + e.getMessage());
+            return null;
+        }
     }
+
+    private GoogleBooksResponse generarResultadosDemo() {
+        GoogleBooksResponse respuesta = new GoogleBooksResponse();
+
+        List<GoogleBookItem> items = new ArrayList<>();
+
+        items.add(crearLibroDemo(
+                "demo-harry-potter",
+                "Harry Potter y la piedra filosofal",
+                "J.K. Rowling",
+                "Fantasía",
+                "/images/demo-harry-potter.jpg"
+        ));
+
+        items.add(crearLibroDemo(
+                "demo-dune",
+                "Dune",
+                "Frank Herbert",
+                "Ciencia ficción",
+                "/images/demo-dune.jpg"
+        ));
+
+        items.add(crearLibroDemo(
+                "demo-el-hobbit",
+                "El hobbit",
+                "J. R. R. Tolkien",
+                "Fantasía",
+                "/images/demo-hobbit.jpg"
+        ));
+
+        respuesta.setItems(items);
+        return respuesta;
+    }
+
+    private GoogleBookItem crearLibroDemo(String id,
+                                          String titulo,
+                                          String autor,
+                                          String categoria,
+                                          String imagenUrl) {
+
+        GoogleBookItem item = new GoogleBookItem();
+        item.setId(id);
+
+        VolumeInfo info = new VolumeInfo();
+        info.setTitle(titulo);
+        info.setAuthors(List.of(autor));
+        info.setCategories(List.of(categoria));
+
+        ImageLinks imageLinks = new ImageLinks();
+        imageLinks.setThumbnail(imagenUrl);
+
+        info.setImageLinks(imageLinks);
+        item.setVolumeInfo(info);
+
+        return item;
+    }
+
+    private GoogleBookItem buscarLibroDemoPorId(String idExterno) {
+        return generarResultadosDemo().getItems().stream()
+                .filter(item -> item.getId().equals(idExterno))
+                .findFirst()
+                .orElse(null);
+    }
+
+
+
 }

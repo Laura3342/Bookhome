@@ -7,17 +7,21 @@
 </head>
 <body>
 
-<header>
-    <h1>BookHome</h1>
-    <p>Mi biblioteca personal</p>
-</header>
+<header class="site-header">
+    <div class="header-banner"></div>
 
-<nav>
-    <a th:href="@{/}">Index</a>
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-</nav>
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
+</header>
 
 <main class="container">
 
@@ -29,106 +33,85 @@
         <p th:text="${mensajeError}"></p>
     </div>
 
-    <section class="cards-section">
-        <h2>Mi biblioteca</h2>
-        <p>Estos son los libros que tienes guardados en tu biblioteca personal.</p>
+    <section class="library-section">
+        <h2 th:text="${tituloPagina}">Mi biblioteca</h2>
+        <p th:text="${descripcionPagina}">Estos son los libros que tienes guardados en tu biblioteca personal.</p>
+        <div class="library-stats">
+            <span>Total: <strong th:text="${libros.size()}">0</strong></span>
+        </div>
 
         <div class="cards-grid" th:if="${libros != null and !libros.isEmpty()}">
-
             <article class="card book-card" th:each="libro : ${libros}">
 
-                <img th:if="${libro.imagenUrl != null and !libro.imagenUrl.isEmpty()}"
-                     th:src="@{${libro.imagenUrl}}"
-                     th:alt="${libro.titulo}"
-                     class="book-cover">
+                <div class="book-cover-wrapper">
+                    <img th:if="${libro.imagenUrl != null and !libro.imagenUrl.isEmpty()}"
+                         th:src="@{${libro.imagenUrl}}"
+                         th:alt="${libro.titulo}"
+                         class="book-cover">
+                </div>
 
-                <h3 th:text="${libro.titulo}">Título del libro</h3>
+                <div class="book-info">
+                    <h3 th:text="${libro.titulo}">Título del libro</h3>
 
-                <p>
-                    <strong>Autor:</strong>
-                    <span th:text="${libro.autor}">Autor</span>
-                </p>
+                    <p class="book-meta" th:text="${libro.autor}">Autor</p>
+                    <p class="book-meta" th:text="${libro.genero}">Género</p>
 
-                <p>
-                    <strong>Género:</strong>
-                    <span th:text="${libro.genero}">Género</span>
-                </p>
+                    <div class="book-status-row">
+                        <span class="status-pill" th:text="${libro.estadoLectura}">Pendiente</span>
+                        <span class="favorite-pill" th:text="${libro.favorito ? '★ Favorito' : '☆ No favorito'}"></span>
+                    </div>
+                </div>
 
-                <p>
-                    <strong>Estado:</strong>
-                    <span th:text="${libro.estadoLectura}">Pendiente</span>
-                </p>
+                <div class="book-controls">
 
-                <form th:action="@{/mis-libros/estado/{id}(id=${libro.id})}" method="post">
-                    <select name="estadoLectura">
-                        <option value="PENDIENTE" th:selected="${libro.estadoLectura.name() == 'PENDIENTE'}">
-                            Pendiente
-                        </option>
+                    <form class="compact-form" th:action="@{/mis-libros/estado/{id}(id=${libro.id})}" method="post">
+                        <select name="estadoLectura">
+                            <option value="PENDIENTE" th:selected="${libro.estadoLectura.name() == 'PENDIENTE'}">Pendiente</option>
+                            <option value="LEYENDO" th:selected="${libro.estadoLectura.name() == 'LEYENDO'}">Leyendo</option>
+                            <option value="LEIDO" th:selected="${libro.estadoLectura.name() == 'LEIDO'}">Leído</option>
+                        </select>
+                        <button type="submit" class="icon-button">Guardar</button>
+                    </form>
 
-                        <option value="LEYENDO" th:selected="${libro.estadoLectura.name() == 'LEYENDO'}">
-                            Leyendo
-                        </option>
+                    <form class="compact-form" th:action="@{/mis-libros/puntuacion/{id}(id=${libro.id})}" method="post">
+                        <select name="puntuacion">
+                            <option value="1" th:selected="${libro.puntuacion == 1}">1 ★</option>
+                            <option value="2" th:selected="${libro.puntuacion == 2}">2 ★</option>
+                            <option value="3" th:selected="${libro.puntuacion == 3}">3 ★</option>
+                            <option value="4" th:selected="${libro.puntuacion == 4}">4 ★</option>
+                            <option value="5" th:selected="${libro.puntuacion == 5}">5 ★</option>
+                        </select>
+                        <button type="submit" class="icon-button">Puntuar</button>
+                    </form>
 
-                        <option value="LEIDO" th:selected="${libro.estadoLectura.name() == 'LEIDO'}">
-                            Leído
-                        </option>
-                    </select>
+                    <p class="rating-text">
+                        <strong>Puntuación:</strong>
+                        <span th:text="${libro.puntuacion != null ? libro.puntuacion + ' ★' : 'Sin valorar'}"></span>
+                    </p>
 
-                    <button type="submit" class="button-link">
-                        Actualizar estado
-                    </button>
-                </form>
+                    <form th:action="@{/mis-libros/favorito/{id}(id=${libro.id})}" method="post">
+                        <button type="submit"
+                                class="secondary-button"
+                                th:text="${libro.favorito ? 'Quitar favorito' : 'Marcar favorito'}">
+                            Cambiar favorito
+                        </button>
+                    </form>
 
-                <p>
-                    <strong>Puntuación:</strong>
-                    <span th:text="${libro.puntuacion != null ? libro.puntuacion : 'Sin valorar'}"></span>
-                </p>
+                    <form class="comment-form" th:action="@{/mis-libros/comentario/{id}(id=${libro.id})}" method="post">
+        <textarea name="comentario"
+                  rows="2"
+                  placeholder="Añadir comentario..."
+                  th:text="${libro.comentario}"></textarea>
 
-                <form th:action="@{/mis-libros/puntuacion/{id}(id=${libro.id})}" method="post">
-                    <select name="puntuacion">
-                        <option value="1" th:selected="${libro.puntuacion == 1}">1</option>
-                        <option value="2" th:selected="${libro.puntuacion == 2}">2</option>
-                        <option value="3" th:selected="${libro.puntuacion == 3}">3</option>
-                        <option value="4" th:selected="${libro.puntuacion == 4}">4</option>
-                        <option value="5" th:selected="${libro.puntuacion == 5}">5</option>
-                    </select>
+                        <button type="submit" class="secondary-button">
+                            Guardar comentario
+                        </button>
+                    </form>
 
-                    <button type="submit" class="button-link">
-                        Guardar puntuación
-                    </button>
-                </form>
-
-                <p>
-                    <strong>Favorito:</strong>
-                    <span th:text="${libro.favorito ? 'Sí' : 'No'}"></span>
-                </p>
-
-                <form th:action="@{/mis-libros/favorito/{id}(id=${libro.id})}" method="post">
-                    <button type="submit"
-                            class="button-link"
-                            th:text="${libro.favorito ? 'Quitar de favoritos' : 'Marcar como favorito'}">
-                        Cambiar favorito
-                    </button>
-                </form>
-
-                <p>
-                    <strong>Comentario:</strong>
-                    <span th:text="${libro.comentario != null and !libro.comentario.isEmpty() ? libro.comentario : 'Sin comentario'}">
-                                Comentario
-                    </span>
-                </p>
-
-                <form th:action="@{/mis-libros/comentario/{id}(id=${libro.id})}" method="post">
-                    <textarea name="comentario" rows="3" th:text="${libro.comentario}"></textarea>
-
-                    <button type="submit" class="button-link">
-                        Guardar comentario
-                    </button>
-                </form>
+                </div>
 
                 <div class="card-actions">
-                    <a class="button-link"
-                       th:href="@{/libros/{id}(id=${libro.id})}">
+                    <a class="button-link" th:href="@{/libros/{id}(id=${libro.id})}">
                         Ver detalle
                     </a>
 

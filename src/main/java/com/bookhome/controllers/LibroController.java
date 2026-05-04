@@ -3,6 +3,7 @@ package com.bookhome.controllers;
 import com.bookhome.models.EstadoLectura;
 import com.bookhome.models.Libro;
 import com.bookhome.service.LibroService;
+import com.bookhome.service.RecomendacionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LibroController {
 
     private final LibroService libroService;
+    private final RecomendacionService recomendacionService;
 
-    public LibroController(LibroService libroService) {
+    public LibroController(LibroService libroService,
+                           RecomendacionService recomendacionService) {
         this.libroService = libroService;
+        this.recomendacionService = recomendacionService;
     }
+
     @GetMapping("/mis-libros")
     public String mostrarMisLibros(Model model) {
         model.addAttribute("libros", libroService.obtenerTodosLosLibros());
+        model.addAttribute("tituloPagina", "Mi biblioteca");
+        model.addAttribute("descripcionPagina", "Estos son los libros que tienes guardados en tu biblioteca personal.");
         return "views/mis-libros";
     }
 
@@ -28,6 +35,10 @@ public class LibroController {
     public String mostrarDetalleLibro(@PathVariable Long id, Model model) {
 
         Libro libro = libroService.obtenerLibroPorId(id);
+        if (libro == null) {
+            libro = recomendacionService.obtenerLibroRecomendadoPorId(id);
+        }
+
         model.addAttribute("libro", libro);
         return "views/libro-detalle";
     }
@@ -67,5 +78,13 @@ public class LibroController {
                                     @RequestParam String comentario) {
         libroService.cambiarComentario(id, comentario);
         return "redirect:/mis-libros";
+    }
+
+    @GetMapping("/mis-libros/favoritos")
+    public String mostrarFavoritos(Model model) {
+        model.addAttribute("libros", libroService.obtenerLibrosFavoritos());
+        model.addAttribute("tituloPagina", "Mis favoritos");
+        model.addAttribute("descripcionPagina", "Estos son tus libros favoritos.");
+        return "views/mis-libros";
     }
 }

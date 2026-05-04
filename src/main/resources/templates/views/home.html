@@ -29,7 +29,7 @@
         <div>
             <h2>Bienvenida a tu espacio de lectura</h2>
             <p>
-                Desde aquí puedes consultar tu biblioteca personal, explorar listas recomendadas
+                Puedes consultar tu biblioteca personal, explorar listas recomendadas
                 y buscar nuevos libros para añadirlos a tus lecturas.
             </p>
         </div>
@@ -38,8 +38,6 @@
 
     <section class="search-section">
         <h2>Buscar libros</h2>
-        <p>Busca libros por título, autor o género. Más adelante esta búsqueda se conectará con una API externa.</p>
-
         <form th:action="@{/buscar-libros}" method="get">
             <input type="text"
                    name="titulo"
@@ -56,7 +54,7 @@
         </form>
     </section>
 
-    <section class="cards-section">
+    <section class="cards-section ">
         <h2>Accesos principales</h2>
 
         <div class="cards-grid">
@@ -76,7 +74,7 @@
             <article class="card">
                 <h3>Favoritos</h3>
                 <p>Accede rápidamente a tus libros favoritos.</p>
-                <a class="button-link" th:href="@{/mis-libros}">Ver favoritos</a>
+                <a class="button-link" th:href="@{/mis-libros/favoritos}">Ver favoritos</a>
             </article>
 
         </div>
@@ -84,24 +82,81 @@
 
     <section class="recommended-preview">
         <h2>Listas recomendadas destacadas</h2>
+        <p>Explora colecciones seleccionadas para descubrir tu próxima lectura.</p>
 
-        <div class="cards-grid">
-
-            <article class="card">
+        <div class="recommendation-row">
+            <div class="recommendation-info">
                 <h3>Clásicos imprescindibles</h3>
-                <p>Una selección de libros clásicos para cualquier lector.</p>
-            </article>
+                <p>Obras esenciales que siguen marcando generaciones.</p>
+                <a class="button-link" th:href="@{/recomendaciones/1}">Ver lista</a>
+            </div>
 
-            <article class="card">
+            <div class="book-strip">
+                <div class="mini-book">
+                    <img th:src="@{/images/cien-años.jpg}" alt="Cien años de soledad">
+                    <span>Cien años de soledad</span>
+                </div>
+
+                <div class="mini-book">
+                    <img th:src="@{/images/rebelion-granja.jpg}" alt="Rebelión en la granja">
+                    <span>Rebelión en la granja</span>
+                </div>
+
+                <div class="mini-book">
+                    <img th:src="@{/images/frankenstein.jpg}" alt="Frankenstein">
+                    <span>Frankenstein</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendation-row">
+            <div class="recommendation-info">
                 <h3>Fantasía y aventura</h3>
-                <p>Historias llenas de mundos imaginarios, magia y viajes.</p>
-            </article>
+                <p>Mundos imaginarios, magia, poder y viajes épicos.</p>
+                <a class="button-link" th:href="@{/recomendaciones/2}">Ver lista</a>
+            </div>
 
-            <article class="card">
-                <h3>Ciencia ficción</h3>
-                <p>Libros sobre futuros posibles, tecnología y sociedad.</p>
-            </article>
+            <div class="book-strip">
+                <div class="mini-book">
+                    <img th:src="@{/images/mistborn.jpg}" alt="El camino de los reyes">
+                    <span>Nacidos de la bruma</span>
+                </div>
 
+                <div class="mini-book">
+                    <img th:src="@{/images/trono-cristal.jpg}" alt="Trono de cristal">
+                    <span>Trono de cristal</span>
+                </div>
+
+                <div class="mini-book">
+                    <img th:src="@{/images/Babel.jpg}" alt="Babel">
+                    <span>Babel</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendation-row">
+            <div class="recommendation-info">
+                <h3>Terror</h3>
+                <p>Historias oscuras, inquietantes y llenas de tensión.</p>
+                <a class="button-link" th:href="@{/recomendaciones/3}">Ver lista</a>
+            </div>
+
+            <div class="book-strip">
+                <div class="mini-book">
+                    <img th:src="@{/images/it.jpg}" alt="It">
+                    <span>It</span>
+                </div>
+
+                <div class="mini-book">
+                    <img th:src="@{/images/dracula.jpg}" alt="Drácula">
+                    <span>Drácula</span>
+                </div>
+
+                <div class="mini-book">
+                    <img th:src="@{/images/resplandor.jpg}" alt="El resplandor">
+                    <span>El resplandor</span>
+                </div>
+            </div>
         </div>
     </section>
 

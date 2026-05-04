@@ -7,43 +7,73 @@
 </head>
 <body>
 
-<header>
-    <h1>BookHome</h1>
-    <p>Resultados de búsqueda</p>
-</header>
+<header class="site-header">
+    <div class="header-banner"></div>
 
-<nav>
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-</nav>
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
+</header>
 
 <main class="container">
 
-    <section class="cards-section">
-        <h2>Resultados para: <span th:text="${titulo}"></span></h2>
+    <section class="page-intro">
+        <h2>Resultados de búsqueda</h2>
+        <p>
+            Resultados para:
+            <strong th:text="${titulo != null and !titulo.isEmpty() ? titulo : autor}">Búsqueda</strong>
+        </p>
+    </section>
 
-        <div class="cards-grid" th:if="${libros != null and !libros.isEmpty()}">
+    <section class="search-results-section">
 
-            <article class="card" th:each="item : ${libros}">
+        <div class="section-title-row">
+            <div>
+                <h2>Libros encontrados</h2>
+                <p>Explora los resultados de Google Books y añade tus favoritos a tu biblioteca.</p>
+            </div>
 
-                <div th:if="${item.volumeInfo.imageLinks != null}">
-                    <img th:src="${item.volumeInfo.imageLinks.thumbnail}"
+            <a class="button-link" th:href="@{/home}">
+                Nueva búsqueda
+            </a>
+        </div>
+
+        <div class="search-results-grid" th:if="${libros != null and !libros.isEmpty()}">
+
+            <article class="search-result-card" th:each="item : ${libros}">
+
+                <div class="search-cover-wrapper">
+                    <img th:if="${item.volumeInfo.imageLinks != null}"
+                         th:src="${item.volumeInfo.imageLinks.thumbnail}"
                          th:alt="${item.volumeInfo.title}"
                          class="book-cover">
+
+                    <div th:if="${item.volumeInfo.imageLinks == null}" class="cover-placeholder-small">
+                        Sin portada
+                    </div>
                 </div>
 
-                <h3 th:text="${item.volumeInfo.title}">Título</h3>
+                <div class="search-book-info">
+                    <h3 th:text="${item.volumeInfo.title}">Título</h3>
 
-                <p>
-                    <strong>Autor:</strong>
-                    <span th:text="${item.volumeInfo.authors != null ? item.volumeInfo.authors[0] : 'Desconocido'}"></span>
-                </p>
+                    <p>
+                        <strong>Autor:</strong>
+                        <span th:text="${item.volumeInfo.authors != null ? item.volumeInfo.authors[0] : 'Desconocido'}"></span>
+                    </p>
 
-                <p>
-                    <strong>Categoría:</strong>
-                    <span th:text="${item.volumeInfo.categories != null ? item.volumeInfo.categories[0] : 'N/A'}"></span>
-                </p>
+                    <p>
+                        <strong>Categoría:</strong>
+                        <span th:text="${item.volumeInfo.categories != null ? item.volumeInfo.categories[0] : 'N/A'}"></span>
+                    </p>
+                </div>
 
                 <form th:action="@{/buscar-libros/{idExterno}/agregar(idExterno=${item.id})}" method="post">
                     <button type="submit" class="button-link">
@@ -51,46 +81,44 @@
                     </button>
                 </form>
 
-
-
             </article>
 
         </div>
 
-        <div th:if="${libros == null or libros.isEmpty()}">
+        <div class="empty-state" th:if="${libros == null or libros.isEmpty()}">
             <p>No se encontraron resultados.</p>
+            <a class="button-link" th:href="@{/home}">Volver a buscar</a>
         </div>
 
         <div class="pagination">
 
             <a th:if="${startIndex > 0}"
                th:href="@{/buscar-libros(
-           titulo=${titulo},
-           autor=${autor},
-           startIndex=${startIndex - 12}
-       )}">
+                   titulo=${titulo},
+                   autor=${autor},
+                   startIndex=${startIndex - 12}
+               )}">
                 ← Anterior
             </a>
 
             <a th:if="${libros != null and !libros.isEmpty()}"
                th:href="@{/buscar-libros(
-           titulo=${titulo},
-           autor=${autor},
-           startIndex=${startIndex + 12}
-       )}">
+                   titulo=${titulo},
+                   autor=${autor},
+                   startIndex=${startIndex + 12}
+               )}">
                 Siguiente →
             </a>
 
         </div>
+
     </section>
-
-
 
 </main>
 
 <footer>
-    <p>BookHome</p>
+    <p>BookHome - Sistema de gestión de lecturas</p>
 </footer>
 
 </body>
-</html>>
+</html>l>>

@@ -2,43 +2,81 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle lista</title>
+    <title th:text="${lista.nombre} + ' - BookHome'">Detalle lista</title>
     <link rel="stylesheet" th:href="@{/styles/style.css}">
 </head>
 <body>
 
-<header class="main-header">
-    <h1 th:text="${lista.nombre}">Nombre lista</h1>
-    <p th:text="${lista.descripcion}">Descripción</p>
-</header>
+<header class="site-header">
+    <div class="header-banner"></div>
 
-<nav class="navbar">
-    <a th:href="@{/home}">Home</a>
-    <a th:href="@{/mis-libros}">Mis libros</a>
-    <a th:href="@{/recomendaciones}">Recomendaciones</a>
-</nav>
+    <div class="navbar">
+        <a class="brand" th:href="@{/home}">
+            <img th:src="@{/images/logo-bookhome.png}" alt="BookHome logo">
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/mis-libros}">Mis libros</a>
+            <a th:href="@{/recomendaciones}">Recomendaciones</a>
+        </nav>
+    </div>
+</header>
 
 <main class="container">
 
-    <section class="cards-section">
-        <h2>Libros de esta lista</h2>
+    <section class="page-intro">
+        <h2 th:text="${lista.nombre}">Nombre lista</h2>
+        <p th:text="${lista.descripcion}">Descripción de la lista</p>
+    </section>
 
-        <div class="cards-grid">
+    <section class="list-detail-section">
+        <div class="section-title-row">
+            <div>
+                <h2>Libros de esta lista</h2>
+                <p>Explora esta selección y añade tus próximos libros a la biblioteca.</p>
+            </div>
 
-            <article class="card" th:each="libro : ${lista.libros}">
-                <h3 th:text="${libro.titulo}">Título</h3>
-                <p th:text="${libro.autor}">Autor</p>
-                <p th:text="${libro.genero}">Género</p>
+            <a class="button-link" th:href="@{/recomendaciones}">
+                Volver a recomendaciones
+            </a>
+        </div>
 
-                <a class="button-link"
-                   th:href="@{/libros/{id}(id=${libro.id})}">
-                    Ver detalle
-                </a>
-                <form th:action="@{/recomendaciones/libro/{id}/agregar(id=${libro.id})}" method="post">
-                    <button type="submit" class="button-link">
-                        Añadir a mi biblioteca
-                    </button>
-                </form>
+        <div class="list-books-grid">
+
+            <article class="list-book-card" th:each="libro : ${lista.libros}">
+
+                <img th:if="${libro.imagenUrl != null and !libro.imagenUrl.isEmpty()}"
+                     th:src="@{${libro.imagenUrl}}"
+                     th:alt="${libro.titulo}"
+                     class="book-cover">
+
+                <div class="book-card-content">
+                    <h3 th:text="${libro.titulo}">Título</h3>
+
+                    <p>
+                        <strong>Autor:</strong>
+                        <span th:text="${libro.autor}">Autor</span>
+                    </p>
+
+                    <p>
+                        <strong>Género:</strong>
+                        <span th:text="${libro.genero}">Género</span>
+                    </p>
+
+                    <div class="card-actions">
+                        <a class="button-link"
+                           th:href="@{/libros/{id}(id=${libro.id})}">
+                            Ver detalle
+                        </a>
+
+                        <form th:action="@{/recomendaciones/libro/{id}/agregar(id=${libro.id})}" method="post">
+                            <button type="submit" class="button-link">
+                                Añadir
+                            </button>
+                        </form>
+                    </div>
+                </div>
 
             </article>
 
@@ -48,7 +86,7 @@
 </main>
 
 <footer>
-    <p>BookHome</p>
+    <p>BookHome - Sistema de gestión de lecturas</p>
 </footer>
 
 </body>
